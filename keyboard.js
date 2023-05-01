@@ -1,22 +1,27 @@
 let lang = "en";
 let mode = "normal";
+let capsStatus = false;
 
-const keyboardHTML = `
-<div class="keyboard">
-  <textarea class="keyboard__showcase">
-  </textarea>
-  <div class="keyboard__keys">
 
-  </div>
-</div>`;
+document.addEventListener("DOMContentLoaded", () => {
+  const keyboardHTML = `
+  <div class="keyboard">
+    <textarea class="keyboard__showcase">
+    </textarea>
+    <div class="keyboard__keys">
+    </div>
+  </div>`;
+  const virtualKeyboard = document.querySelector(".virtual-keyboard");
+  virtualKeyboard.insertAdjacentHTML("afterbegin", keyboardHTML);
+  virtualKeyboard.addEventListener("keydown", handleKeyDown);
+  virtualKeyboard.addEventListener("keyup", handleKeyUp);
+  const keyboard = document.querySelector('.keyboard__keys');
+  keyboard.addEventListener("mousedown", mouseClickDown);
+  keyboard.addEventListener("mouseup", mouseClickUp);
+  renderKeyboard();
+});
 
-const virtualKeyboard = document.querySelector(".virtual-keyboard");
-virtualKeyboard.insertAdjacentHTML("afterbegin", keyboardHTML);
 
-const currentLangObj = (lang) => {
-  return lang === "en" ? en : ru;
-
-};
 
 
 const ru = {
@@ -134,20 +139,47 @@ const en = {
     { normal: "del", class: "delete" }],
   ]
 }
-const keyboard = document.querySelector('.keyboard__keys');
+
+const specialKeys = {
+  shift: (event) => {
+    //console.log(event);
+    if ( modeKey !== 'shift') {
+      modeKey = 'shift';
+      renderKeyboard();
+    }
+  },
+  capslock: (event) => {
+    capsStatus = !capsStatus;
+    renderKeyboard();
+  }
+  // tab: (event) => {
+  //   // let indexTextArea = textarea.selectionStart;
+  //   // textarea.value = textarea.value.slice(0, indexTextArea) + valueKey + textarea.value.slice(indexTextArea, )
+  //   // textarea.selectionStart = indexTextArea+1;
+  //   // textarea.selectionEnd = indexTextArea+1;
+  //   // textarea.focus();
+  // }
+};
+
 let modeKey = 'normal';
-function renderKeyboard(lang) {
-  let array1 = currentLangObj(lang);
-  console.log(array1);
-  const hrmlString = array1.keys.map(row => {
+function renderKeyboard() {
+  const keyboard = document.querySelector('.keyboard__keys');
+  let objKB = lang === "ru" ? ru : en;
+  console.log(objKB);
+  const hrmlString = objKB.keys.map(row => {
     const rowString = row.map(key => {
       let value = key;
       const classes = ['key'];
       if (typeof key === 'object') {
+        const isUpperCase = (!capsStatus && modeKey === "shift") || ( capsStatus && modeKey !== "shift")
         value = key[modeKey] || key.normal;
+        value = isUpperCase ? value.toUpperCase() : value;
+        //console.log(value);
         key.class && classes.push(key.class);
       }
-      return `<div class="${classes.join(' ')}">${value}</div>`
+      return `<div class="${classes.join(' ')}" data-key="${value}">
+      <span>${value}</span>
+      </div>`
     }).join('');
     //console.log('rowString', rowString)
     return `<div class="row">${rowString}</div>`
@@ -155,39 +187,45 @@ function renderKeyboard(lang) {
   //console.log('hrmlString', hrmlString)
   keyboard.innerHTML = hrmlString;
 }
-document.addEventListener('keydown', (e) => {
-  if (e.key.toLowerCase() === 'shift' && mode !== 'shift') {
-    modeKey = 'shift';
-    renderKeyboard();
-    
+
+function handleKeyDown (event) {
+  const key = event.key.toLowerCase();
+  if (specialKeys[key]){
+    return specialKeys[key](event);
   }
-});
-document.addEventListener('keyup', (e) => {
-  if (e.key.toLowerCase() === 'shift') {
+  
+}
+
+function handleKeyUp (event) {
+  if (event.key.toLowerCase() === 'shift') {
     modeKey = 'normal';
     renderKeyboard();
   }
-});
+}
 
 
 function mouseClickDown(event) {
   const key = event.target.closest(".key");
   if (!key) return;
-  key.classList.toggle("active");
+  key.classList.add("active");
+  const textarea = document.querySelector(".keyboard__showcase");
+  let valueKey = key.dataset.key;
+  let indexTextArea = textarea.selectionStart;
+  textarea.value = textarea.value.slice(0, indexTextArea) + valueKey + textarea.value.slice(indexTextArea, )
+  textarea.selectionStart = indexTextArea+1;
+  textarea.selectionEnd = indexTextArea+1;
+  textarea.focus();
 }
-
 
 function mouseClickUp(event) {
   const key = event.target.closest(".key");
   if (!key) return;
   key.classList.remove("active");
+  const textarea = document.querySelector(".keyboard__showcase");
+  textarea.focus();
 }
 
-
-
-
-
-const keyboard1 = document.querySelector(".keyboard__keys");
-keyboard1.addEventListener("mousedown", mouseClickDown);
-keyboard1.addEventListener("mouseup", mouseClickUp);
-renderKeyboard(lang);
+function focusText() {
+  const textarea = document.querySelector(".keyboard__showcase");
+  textarea.focus();
+}
