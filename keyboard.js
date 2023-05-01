@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
     </textarea>
     <div class="keyboard__keys">
     </div>
+    <p> Клавиатура созданна в операционной системе Windows</p>
+    <p> Для переключения языка используйте ctrl+ alt </p>
   </div>`;
   const virtualKeyboard = document.querySelector(".virtual-keyboard");
   virtualKeyboard.insertAdjacentHTML("afterbegin", keyboardHTML);
@@ -21,9 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
   keyboard.addEventListener("mousedown", mouseClickDown);
   keyboard.addEventListener("mouseup", mouseClickUp);
   renderKeyboard();
+  checkLang();
 });
-
-
 
 
 const ru = {
@@ -57,7 +58,7 @@ const ru = {
     { normal: "х", shift: "Х" },
     { normal: "ъ", shift: "Ъ" },
     { normal: "\\", shift: "/", class: "backslash" }],
-    [{ normal: "caps", class: "caps" },
+    [{ normal: "caps", class: "capslock" },
     { normal: "ф", shift: "Ф" },
     { normal: "ы", shift: "Ы" },
     { normal: "в", shift: "В" },
@@ -84,7 +85,7 @@ const ru = {
     { normal: "↑", class: "up" },
     { normal: "shift", class: "shift" }
     ],
-    [{ normal: "ctrl", class: "ctrl" },
+    [{ normal: "ctrl", class: "control" },
     { normal: "ё", shift: "Ё" },
     { normal: "alt", class: "alt" },
     { normal: "space", class: "space" },
@@ -128,7 +129,7 @@ const en = {
     { normal: "[", shift: "{" },
     { normal: "[", shift: "}" },
     { normal: "\\", shift: "|", class: "backslash" }],
-    [{ normal: "caps", class: "caps" },
+    [{ normal: "caps", class: "capslock" },
     { normal: "a", shift: "A" },
     { normal: "s", shift: "S" },
     { normal: "d", shift: "D" },
@@ -155,7 +156,7 @@ const en = {
     { normal: "↑", class: "up" },
     { normal: "shift", class: "shift" }
     ],
-    [{ normal: "ctrl", class: "ctrl" },
+    [{ normal: "ctrl", class: "control" },
     { normal: "ё", shift: "Ё" },
     { normal: "alt", class: "alt" },
     { normal: "space", class: "space" },
@@ -191,7 +192,7 @@ const specialKeys = {
     else{
       element.classList.remove("active");
     }
-    console.log(element);
+    //console.log(element);
   },
   tab: (event) => {
     event.preventDefault();
@@ -237,7 +238,6 @@ const specialKeys = {
   },
   alt:(event) =>{
     altState = true;
-    console.log("alt ctrl state", ctrlState, altState)
     checkLang();
     renderKeyboard();
   }
@@ -253,7 +253,7 @@ let modeKey = 'normal';
 function renderKeyboard() {
   const keyboard = document.querySelector('.keyboard__keys');
   let objKB = lang === "ru" ? ru : en;
-  console.log(objKB);
+  //console.log(objKB);
   const hrmlString = objKB.keys.map(row => {
     const rowString = row.map(key => {
       let value = key;
@@ -293,7 +293,7 @@ function handleKeyDown (event) {
   }
   activeKeys.push(SuperTestKey8);
   const keys = document.querySelectorAll(".key");
-  console.log('activeKeys', activeKeys)
+  //console.log('activeKeys', activeKeys)
   activeKeys.forEach(activeKey =>{
       console.log('activeKey', activeKey)
       const element  = document.querySelector(`[data-key~="${activeKey}"]`);
@@ -301,7 +301,7 @@ function handleKeyDown (event) {
       element && element.classList.add("active");
     }
   )
-  console.log('   ')
+  //console.log('   ')
   //console.log(activeKeys);
 }
 
