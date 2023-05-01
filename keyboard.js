@@ -1,6 +1,8 @@
 let lang = "en";
 let mode = "normal";
 let capsStatus = false;
+let altState = false;
+let ctrlState = false;
 let activeKeys =[];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -27,7 +29,20 @@ document.addEventListener("DOMContentLoaded", () => {
 const ru = {
   lang: "ru",
   keys: [
-    [{ normal: "`", shift: "~", class: "esc" }, "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", { normal: "⌫", shift: "⌫", class: "backspace" }],
+    [{ normal: "`", shift: "~", class: "esc" },
+    { normal: "1", shift: "!" },
+    { normal: "2", shift: '"' },
+    { normal: "3", shift: "№" },
+    { normal: "4", shift: ";" },
+    { normal: "5", shift: "%" },
+    { normal: "6", shift: ":" },
+    { normal: "7", shift: "?" },
+    { normal: "8", shift: "*" },
+    { normal: "9", shift: "(" },
+    { normal: "0", shift: ")" },
+    { normal: "-", shift: "_" },
+    { normal: "=", shift: "+" },
+     { normal: "⌫", shift: "⌫", class: "backspace" }],
     [{ normal: "tab", class: "tab" },
     { normal: "й", shift: "Й", class: "key" },
     { normal: "ц", shift: "Ц" },
@@ -85,7 +100,20 @@ const ru = {
 const en = {
   lang: "en",
   keys: [
-    [{ normal: "`", shift: "~", class: "esc" }, "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", { normal: "⌫", shift: "⌫", class: "backspace" }],
+    [{ normal: "`", shift: "~", class: "esc" },
+    { normal: "1", shift: "!" },
+    { normal: "2", shift: "@" },
+    { normal: "3", shift: "#" },
+    { normal: "4", shift: "$" },
+    { normal: "5", shift: "%" },
+    { normal: "6", shift: "^" },
+    { normal: "7", shift: "&" },
+    { normal: "8", shift: "*" },
+    { normal: "9", shift: "(" },
+    { normal: "0", shift: ")" },
+    { normal: "-", shift: "_" },
+    { normal: "=", shift: "+" },
+    { normal: "⌫", shift: "⌫", class: "backspace" }],
     [{ normal: "tab", class: "tab" },
     { normal: "q", shift: "Q" },
     { normal: "w", shift: "W" },
@@ -142,8 +170,12 @@ const en = {
 
 const specialKeys = {
   shift: (event) => {
-    activeKeys = [];
     //console.log(event);
+    activeKeys.forEach(item => {
+      const element  = document.querySelector(`[data-key~="${item.key}"]`);
+      element && element.classList.remove("active");
+    });
+    activeKeys = [];
     if ( modeKey !== 'shift') {
       modeKey = 'shift';
       renderKeyboard();
@@ -152,6 +184,14 @@ const specialKeys = {
   capslock: (event) => {
     capsStatus = !capsStatus;
     renderKeyboard();
+    const element  = document.querySelector(`[data-key~="caps"]`);
+    if (capsStatus){
+      element.classList.add("active");
+    }
+    else{
+      element.classList.remove("active");
+    }
+    console.log(element);
   },
   tab: (event) => {
     event.preventDefault();
@@ -190,7 +230,24 @@ const specialKeys = {
     textarea.selectionEnd = indexTextArea;
     textarea.focus();
   },
+  control:(event) =>{
+   ctrlState = true;
+   checkLang();
+   renderKeyboard();
+  },
+  alt:(event) =>{
+    altState = true;
+    console.log("alt ctrl state", ctrlState, altState)
+    checkLang();
+    renderKeyboard();
+  }
 };
+
+function checkLang() {
+  if (ctrlState && altState){
+    lang = lang ==="ru" ? "en" : "ru";
+  }
+}
 
 let modeKey = 'normal';
 function renderKeyboard() {
@@ -204,7 +261,9 @@ function renderKeyboard() {
       if (typeof key === 'object') {
         const isUpperCase = (!capsStatus && modeKey === "shift") || ( capsStatus && modeKey !== "shift")
         value = key[modeKey] || key.normal;
-        value = isUpperCase ? value.toUpperCase() : value;
+        if (! isSpecial(value)){
+          value = isUpperCase ? value.toUpperCase() : value.toLowerCase();
+        }
         //console.log(value);
         key.class && classes.push(key.class);
       }
@@ -222,16 +281,32 @@ function renderKeyboard() {
 function handleKeyDown (event) {
   const key = event.key.toLowerCase();
   if (specialKeys[key]){
-    return specialKeys[key](event);
+    specialKeys[key](event);
   }
-  activeKeys.push(event.key);
+  if (event.key.toLowerCase()=== "capslock"){
+    return;
+  }
+  const isUpperCase = (!capsStatus && modeKey === "shift") || ( capsStatus && modeKey !== "shift");
+  let SuperTestKey8 = key;
+  if (!isSpecial(SuperTestKey8)){
+    SuperTestKey8 = isUpperCase ? event.key.toUpperCase() : event.key.toLowerCase();
+  }
+  activeKeys.push(SuperTestKey8);
   const keys = document.querySelectorAll(".key");
+  console.log('activeKeys', activeKeys)
   activeKeys.forEach(activeKey =>{
+      console.log('activeKey', activeKey)
       const element  = document.querySelector(`[data-key~="${activeKey}"]`);
+      console.log('element', element)
       element && element.classList.add("active");
     }
   )
+  console.log('   ')
   //console.log(activeKeys);
+}
+
+function isSpecial (key){
+  return key.length !== 1;
 }
 
 function handleKeyUp (event) {
@@ -239,11 +314,26 @@ function handleKeyUp (event) {
     modeKey = 'normal';
     renderKeyboard();
   }
+  if (event.key.toLowerCase() === "control"){
+    ctrlState = false;
+  }
+  if (event.key.toLowerCase() === "alt"){
+    altState = false;
+  }
+  if (event.key.toLowerCase()=== "capslock"){
+    return;
+  }
   const textarea = document.querySelector(".keyboard__showcase");
   textarea.focus();
-  activeKeys = activeKeys.filter(key => key !== event.key )
-  const element  = document.querySelector(`[data-key~="${event.key}"]`);
-  element && element.classList.remove("active");
+  if (event.key.toLowerCase() !== "capslock"){
+    let elemKey = isSpecial(event.key) ? event.key.toLowerCase(): event.key;
+    activeKeys = activeKeys.filter(key => key !== elemKey )
+    //console.log("event_key", eveKey);
+    const element  = document.querySelector(`[data-key~="${elemKey}"]`);
+    element && element.classList.remove("active");
+  }
+  
+
 }
 
 
