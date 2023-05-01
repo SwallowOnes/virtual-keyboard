@@ -1,7 +1,7 @@
 let lang = "en";
 let mode = "normal";
 let capsStatus = false;
-
+let activeKeys =[];
 
 document.addEventListener("DOMContentLoaded", () => {
   const keyboardHTML = `
@@ -142,6 +142,7 @@ const en = {
 
 const specialKeys = {
   shift: (event) => {
+    activeKeys = [];
     //console.log(event);
     if ( modeKey !== 'shift') {
       modeKey = 'shift';
@@ -151,14 +152,44 @@ const specialKeys = {
   capslock: (event) => {
     capsStatus = !capsStatus;
     renderKeyboard();
-  }
-  // tab: (event) => {
-  //   // let indexTextArea = textarea.selectionStart;
-  //   // textarea.value = textarea.value.slice(0, indexTextArea) + valueKey + textarea.value.slice(indexTextArea, )
-  //   // textarea.selectionStart = indexTextArea+1;
-  //   // textarea.selectionEnd = indexTextArea+1;
-  //   // textarea.focus();
-  // }
+  },
+  tab: (event) => {
+    event.preventDefault();
+    const textarea = document.querySelector(".keyboard__showcase");
+    let indexTextArea = textarea.selectionStart;
+    textarea.value = textarea.value.slice(0, indexTextArea) + "    " + textarea.value.slice(indexTextArea, )
+    textarea.selectionStart = indexTextArea+4;
+    textarea.selectionEnd = indexTextArea+4;
+    textarea.focus();
+  },
+  enter: (event) => {
+    event.preventDefault();
+    const textarea = document.querySelector(".keyboard__showcase");
+    let indexTextArea = textarea.selectionStart;
+    textarea.value = textarea.value.slice(0, indexTextArea) + "\n" + textarea.value.slice(indexTextArea, )
+    textarea.selectionStart = indexTextArea+1;
+    textarea.selectionEnd = indexTextArea+1;
+    textarea.focus();
+  },
+  backspace: (event) => {
+    event.preventDefault();
+    const textarea = document.querySelector(".keyboard__showcase");
+    let indexTextArea = textarea.selectionStart;
+    let minValue = Math.max(0, indexTextArea - 1);
+    textarea.value = textarea.value.slice(0, minValue ) + textarea.value.slice(indexTextArea, )
+    textarea.selectionStart = minValue;
+    textarea.selectionEnd = minValue;
+    textarea.focus();
+  },
+  delete: (event) => {
+    event.preventDefault();
+    const textarea = document.querySelector(".keyboard__showcase");
+    let indexTextArea = textarea.selectionStart;
+    textarea.value = textarea.value.slice(0, indexTextArea) + textarea.value.slice(indexTextArea+1, )
+    textarea.selectionStart = indexTextArea;
+    textarea.selectionEnd = indexTextArea;
+    textarea.focus();
+  },
 };
 
 let modeKey = 'normal';
@@ -193,7 +224,14 @@ function handleKeyDown (event) {
   if (specialKeys[key]){
     return specialKeys[key](event);
   }
-  
+  activeKeys.push(event.key);
+  const keys = document.querySelectorAll(".key");
+  activeKeys.forEach(activeKey =>{
+      const element  = document.querySelector(`[data-key~="${activeKey}"]`);
+      element && element.classList.add("active");
+    }
+  )
+  //console.log(activeKeys);
 }
 
 function handleKeyUp (event) {
@@ -201,6 +239,11 @@ function handleKeyUp (event) {
     modeKey = 'normal';
     renderKeyboard();
   }
+  const textarea = document.querySelector(".keyboard__showcase");
+  textarea.focus();
+  activeKeys = activeKeys.filter(key => key !== event.key )
+  const element  = document.querySelector(`[data-key~="${event.key}"]`);
+  element && element.classList.remove("active");
 }
 
 
