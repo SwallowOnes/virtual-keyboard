@@ -85,7 +85,7 @@ const ru = {
     { normal: "↑", class: "up" },
     { normal: "shift", class: "shift" }
     ],
-    [{ normal: "ctrl", class: "control" },
+    [{ normal: "control", class: "control" },
     { normal: "ё", shift: "Ё" },
     { normal: "alt", class: "alt" },
     { normal: "space", class: "space" },
@@ -156,7 +156,7 @@ const en = {
     { normal: "↑", class: "up" },
     { normal: "shift", class: "shift" }
     ],
-    [{ normal: "ctrl", class: "control" },
+    [{ normal: "control", class: "control" },
     { normal: "ё", shift: "Ё" },
     { normal: "alt", class: "alt" },
     { normal: "space", class: "space" },
@@ -332,7 +332,6 @@ function handleKeyUp (event) {
     const element  = document.querySelector(`[data-key~="${elemKey}"]`);
     element && element.classList.remove("active");
   }
-  
 
 }
 
