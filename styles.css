@@ -1,0 +1,109 @@
+* {
+    box-sizing: border-box;
+}
+
+.virtual-keyboard {
+    font-family: "Roboto", sans-serif;
+    background: #cfcfcf;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.keyboard {
+    width: 890px;
+}
+
+.keyboard .keyboard__showcase {
+    position: relative;
+    height: 40%;
+    width: 100%;
+    padding: 20px;
+    font-size: 18px;
+    white-space: pre-wrap;
+    border-radius: 5px;
+    resize: none;
+}
+.keyboard__showcase:focus {
+    outline: none !important;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
+  }
+
+.keyboard .keyboard__keys {
+    display: flex;
+    flex-direction: column;
+    column-gap: 10px;
+    row-gap: 10px;
+}
+
+.row {
+    display: flex;
+    column-gap: 10px;
+}
+
+.key {
+    display: flex;
+    justify-content: center;
+    transition: 0.3s;
+    border: 1px solid #000;
+    border-radius: 3px;
+    flex-direction: column;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+}
+
+.key span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab,
+.backslash {
+    width: 60px;
+}
+
+.caps {
+    width: 85px;
+}
+
+.shift-left {
+    width: 100px;
+}
+
+.space{
+    width: calc(50px * 6 );
+}
+
+.key.active {
+    background: #83869c;
+}
+
+.row > div:last-child {
+    flex: auto;
+}
+
+.row
+.esc,
+.up,
+.lang,
+.left,
+.down,
+.right,
+.backspace,
+.tab,
+.caps,
+.shift,
+.ctrl,
+.alt,
+.delete,
+.enter,
+.space,
+.backquote,
+.backslash {
+    background: #e0e0e0;
+}
+
+
