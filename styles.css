@@ -74,9 +74,7 @@ p {
     width: 85px;
 }
 
-.shift-left {
-    width: 100px;
-}
+
 
 .space{
     width: calc(50px * 6 );
