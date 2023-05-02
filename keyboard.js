@@ -4,6 +4,7 @@ let capsStatus = false;
 let altState = false;
 let ctrlState = false;
 let activeKeys =[];
+let language = localStorage.getItem("kbLanguage") || "ru";
 
 document.addEventListener("DOMContentLoaded", () => {
   const keyboardHTML = `
@@ -243,10 +244,13 @@ const specialKeys = {
   }
 };
 
-function checkLang() {
-  if (ctrlState && altState){
-    lang = lang ==="ru" ? "en" : "ru";
+function checkLanguage() {
+  if (ctrlStatus && altStatus) {
+    language = language === "ru" ? 'en' : 'ru';
   }
+  // Local Store
+  localStorage.setItem("kbLanguage", `${language}`);
+  fillButton();
 }
 
 let modeKey = 'normal';
@@ -282,8 +286,9 @@ function handleKeyDown (event) {
   const key = event.key.toLowerCase();
   if (specialKeys[key]){
     specialKeys[key](event);
+    
   }
-  if (event.key.toLowerCase()=== "capslock"){
+  if (event.key.toLowerCase() === "capslock"){
     return;
   }
   const isUpperCase = (!capsStatus && modeKey === "shift") || ( capsStatus && modeKey !== "shift");
