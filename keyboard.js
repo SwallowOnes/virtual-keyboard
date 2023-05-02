@@ -343,6 +343,22 @@ function mouseClickDown(event) {
   key.classList.add("active");
   const textarea = document.querySelector(".keyboard__showcase");
   let valueKey = key.dataset.key;
+  console.log(valueKey);
+  if (specialKeys[valueKey]){
+    specialKeys[valueKey](event); 
+  }
+  if (valueKey === "caps"){
+    valueKey = "capslock";
+    specialKeys[valueKey](event);
+  }
+  if (valueKey === "⌫"){
+    valueKey = "backspace";
+    specialKeys[valueKey](event);
+  }
+  if (valueKey === "del"){
+    valueKey = "delete";
+    specialKeys[valueKey](event);
+  }
   if (!isSpecial(valueKey) && valueKey !== "⌫"){
     let indexTextArea = textarea.selectionStart;
     textarea.value = textarea.value.slice(0, indexTextArea) + valueKey + textarea.value.slice(indexTextArea, )
