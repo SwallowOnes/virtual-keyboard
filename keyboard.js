@@ -244,13 +244,12 @@ const specialKeys = {
   }
 };
 
-function checkLanguage() {
-  if (ctrlStatus && altStatus) {
-    language = language === "ru" ? 'en' : 'ru';
+function checkLang() {
+  if (ctrlState && altState) {
+    lang = lang === "ru" ? 'en' : 'ru';
   }
   // Local Store
-  localStorage.setItem("kbLanguage", `${language}`);
-  fillButton();
+  localStorage.setItem("kbLanguage", `${lang}`);
 }
 
 let modeKey = 'normal';
@@ -343,7 +342,19 @@ function handleKeyUp (event) {
 
 function mouseClickDown(event) {
   const key = event.target.closest(".key");
-  if (!key) return;
+  // // if (!key) return;
+  // // if (specialKeys[key]){
+  // //   specialKeys[key](event);
+  // // }
+  // // if (event.key.toLowerCase() === "capslock"){
+  // //   return;
+  // // }
+  // // const isUpperCase = (!capsStatus && modeKey === "shift") || ( capsStatus && modeKey !== "shift");
+  // // let inputKey = key;
+  // // if (!isSpecial(inputKey)){
+  // //   inputKey = isUpperCase ? event.key.toUpperCase() : event.key.toLowerCase();
+  // // }
+  // activeKeys.push(inputKey);
   key.classList.add("active");
   const textarea = document.querySelector(".keyboard__showcase");
   let valueKey = key.dataset.key;
