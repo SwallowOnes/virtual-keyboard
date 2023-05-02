@@ -1,10 +1,10 @@
-let lang = "en";
 let mode = "normal";
 let capsStatus = false;
 let altState = false;
 let ctrlState = false;
 let activeKeys =[];
-let language = localStorage.getItem("kbLanguage") || "ru";
+let lang = localStorage.getItem("kbLanguage") || "ru";
+console.log(lang);
 
 document.addEventListener("DOMContentLoaded", () => {
   const keyboardHTML = `
@@ -250,6 +250,7 @@ function checkLang() {
   }
   // Local Store
   localStorage.setItem("kbLanguage", `${lang}`);
+  renderKeyboard();
 }
 
 let modeKey = 'normal';
@@ -359,6 +360,7 @@ function mouseClickDown(event) {
     valueKey = "delete";
     specialKeys[valueKey](event);
   }
+  const isUpperCase = (!capsStatus && modeKey === "shift") || ( capsStatus && modeKey !== "shift");
   if (!isSpecial(valueKey) && valueKey !== "⌫"){
     let indexTextArea = textarea.selectionStart;
     textarea.value = textarea.value.slice(0, indexTextArea) + valueKey + textarea.value.slice(indexTextArea, )
