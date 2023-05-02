@@ -195,6 +195,15 @@ const specialKeys = {
     }
     //console.log(element);
   },
+  space: (event) => {
+    event.preventDefault();
+    const textarea = document.querySelector(".keyboard__showcase");
+    let indexTextArea = textarea.selectionStart;
+    textarea.value = textarea.value.slice(0, indexTextArea) + " " + textarea.value.slice(indexTextArea, )
+    textarea.selectionStart = indexTextArea+4;
+    textarea.selectionEnd = indexTextArea+4;
+    textarea.focus();
+  },
   tab: (event) => {
     event.preventDefault();
     const textarea = document.querySelector(".keyboard__showcase");
@@ -301,7 +310,11 @@ function handleKeyDown (event) {
   const keys = document.querySelectorAll(".key");
   //console.log('activeKeys', activeKeys)
   activeKeys.forEach(activeKey =>{
-      //console.log('activeKey', activeKey)
+      if (activeKey === " "){
+        activeKey = "space";
+        const element  = document.querySelector(`[data-key~="${activeKey}"]`);
+      }
+      //console.log("activeKey=`", activeKey,"`")
       const element  = document.querySelector(`[data-key~="${activeKey}"]`);
       //console.log('element', element)
       element && element.classList.add("active");
@@ -327,16 +340,20 @@ function handleKeyUp (event) {
   if (event.key.toLowerCase()=== "capslock"){
     return;
   }
+
   const textarea = document.querySelector(".keyboard__showcase");
   textarea.focus();
+  //console.log("event=`|", event.key.toLowerCase(), "|`")
   if (event.key.toLowerCase() !== "capslock"){
     let elemKey = isSpecial(event.key) ? event.key.toLowerCase(): event.key;
     activeKeys = activeKeys.filter(key => key !== elemKey )
-    //console.log("event_key", eveKey);
+      if (elemKey === " "){
+        elemKey = "space"
+      }
     const element  = document.querySelector(`[data-key~="${elemKey}"]`);
     element && element.classList.remove("active");
   }
-
+  //console.log("event=`|", elemKey, "|`")
 }
 
 function mouseClickDown(event) {
