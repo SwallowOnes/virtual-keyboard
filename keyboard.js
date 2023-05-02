@@ -238,6 +238,7 @@ const specialKeys = {
    renderKeyboard();
   },
   alt:(event) =>{
+    event.preventDefault();
     altState = true;
     checkLang();
     renderKeyboard();
