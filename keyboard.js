@@ -299,14 +299,12 @@ function handleKeyDown (event) {
   const keys = document.querySelectorAll(".key");
   //console.log('activeKeys', activeKeys)
   activeKeys.forEach(activeKey =>{
-      console.log('activeKey', activeKey)
+      //console.log('activeKey', activeKey)
       const element  = document.querySelector(`[data-key~="${activeKey}"]`);
-      console.log('element', element)
+      //console.log('element', element)
       element && element.classList.add("active");
     }
   )
-  //console.log('   ')
-  //console.log(activeKeys);
 }
 
 function isSpecial (key){
@@ -339,30 +337,19 @@ function handleKeyUp (event) {
 
 }
 
-
 function mouseClickDown(event) {
   const key = event.target.closest(".key");
-  // // if (!key) return;
-  // // if (specialKeys[key]){
-  // //   specialKeys[key](event);
-  // // }
-  // // if (event.key.toLowerCase() === "capslock"){
-  // //   return;
-  // // }
-  // // const isUpperCase = (!capsStatus && modeKey === "shift") || ( capsStatus && modeKey !== "shift");
-  // // let inputKey = key;
-  // // if (!isSpecial(inputKey)){
-  // //   inputKey = isUpperCase ? event.key.toUpperCase() : event.key.toLowerCase();
-  // // }
-  // activeKeys.push(inputKey);
+  if (!key) return;
   key.classList.add("active");
   const textarea = document.querySelector(".keyboard__showcase");
   let valueKey = key.dataset.key;
-  let indexTextArea = textarea.selectionStart;
-  textarea.value = textarea.value.slice(0, indexTextArea) + valueKey + textarea.value.slice(indexTextArea, )
-  textarea.selectionStart = indexTextArea+1;
-  textarea.selectionEnd = indexTextArea+1;
-  textarea.focus();
+  if (!isSpecial(valueKey) && valueKey !== "⌫"){
+    let indexTextArea = textarea.selectionStart;
+    textarea.value = textarea.value.slice(0, indexTextArea) + valueKey + textarea.value.slice(indexTextArea, )
+    textarea.selectionStart = indexTextArea+1;
+    textarea.selectionEnd = indexTextArea+1;
+    textarea.focus();
+  }
 }
 
 function mouseClickUp(event) {
