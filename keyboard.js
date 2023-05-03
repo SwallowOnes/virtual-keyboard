@@ -4,7 +4,7 @@ let altState = false;
 let ctrlState = false;
 let activeKeys = [];
 let lang = localStorage.getItem("kbLanguage") || "ru";
-console.log(lang);
+//console.log(lang);
 
 document.addEventListener("DOMContentLoaded", () => {
   const keyboardHTML = `
@@ -27,146 +27,144 @@ document.addEventListener("DOMContentLoaded", () => {
   checkLang();
 });
 
-
 const ru = {
   lang: "ru",
   keys: [
-    [{ normal: "`", shift: "~", class: "esc" },
-    { normal: "1", shift: "!" },
-    { normal: "2", shift: '"' },
-    { normal: "3", shift: "№" },
-    { normal: "4", shift: ";" },
-    { normal: "5", shift: "%" },
-    { normal: "6", shift: ":" },
-    { normal: "7", shift: "?" },
-    { normal: "8", shift: "*" },
-    { normal: "9", shift: "(" },
-    { normal: "0", shift: ")" },
-    { normal: "-", shift: "_" },
-    { normal: "=", shift: "+" },
-    { normal: "⌫", shift: "⌫", class: "backspace" }],
-    [{ normal: "tab", class: "tab" },
-    { normal: "й", shift: "Й", class: "key" },
-    { normal: "ц", shift: "Ц" },
-    { normal: "у", shift: "У" },
-    { normal: "к", shift: "К" },
-    { normal: "е", shift: "Е" },
-    { normal: "н", shift: "Н" },
-    { normal: "г", shift: "Г" },
-    { normal: "ш", shift: "Ш" },
-    { normal: "щ", shift: "Щ" },
-    { normal: "з", shift: "З" },
-    { normal: "х", shift: "Х" },
-    { normal: "ъ", shift: "Ъ" },
-    { normal: "\\", shift: "/", class: "backslash" }],
-    [{ normal: "caps", class: "capslock" },
-    { normal: "ф", shift: "Ф" },
-    { normal: "ы", shift: "Ы" },
-    { normal: "в", shift: "В" },
-    { normal: "а", shift: "А" },
-    { normal: "п", shift: "П" },
-    { normal: "р", shift: "Р" },
-    { normal: "о", shift: "О" },
-    { normal: "л", shift: "Л" },
-    { normal: "д", shift: "Д" },
-    { normal: "ж", shift: "Ж" },
-    { normal: "э", shift: "Э" },
-    { normal: "enter", class: "enter" }],
-    [{ normal: "shift", class: "shift" },
-    { normal: "я", shift: "Я" },
-    { normal: "ч", shift: "Ч" },
-    { normal: "с", shift: "С" },
-    { normal: "м", shift: "М" },
-    { normal: "и", shift: "И" },
-    { normal: "т", shift: "Т" },
-    { normal: "ь", shift: "Ь" },
-    { normal: "б", shift: "Б" },
-    { normal: "ю", shift: "Ю" },
-    { normal: ".", shift: "," },
-    { normal: "↑", class: "up" },
-    { normal: "shift", class: "shift" }
-    ],
-    [{ normal: "control", class: "control" },
-    { normal: "ё", shift: "Ё" },
-    { normal: "alt", class: "alt" },
-    { normal: "space", class: "space" },
-    { normal: "alt", class: "alt" },
-    { normal: "lang", class: "lang" },
-    { normal: "←", class: "left" },
-    { normal: "↓", class: "down" },
-    { normal: "→", class: "right" },
-    { normal: "del", class: "delete" }],
+    [{ normal: "ё", shift: "Ё", class: "esc", dataset: "Backquote" },
+    { normal: "1", shift: "!", dataset: "Digit1" },
+    { normal: "2", shift: '"', dataset: "Digit2" },
+    { normal: "3", shift: "№", dataset: "Digit3" },
+    { normal: "4", shift: ";", dataset: "Digit4" },
+    { normal: "5", shift: "%", dataset: "Digit5" },
+    { normal: "6", shift: ":", dataset: "Digit6" },
+    { normal: "7", shift: "?", dataset: "Digit7" },
+    { normal: "8", shift: "*", dataset: "Digit8" },
+    { normal: "9", shift: "(", dataset: "Digit9" },
+    { normal: "0", shift: ")", dataset: "Digit0" },
+    { normal: "-", shift: "_", dataset: "Minus" },
+    { normal: "=", shift: "+" , dataset: "Equal"},
+    { normal: "bs", shift: "bs", class: "backspace", dataset: "Backspace" }],
+    [{ normal: "tab", class: "tab", dataset: "Tab" },
+    { normal: "й", shift: "Й" , dataset: "KeyQ" },
+    { normal: "ц", shift: "Ц" , dataset: "KeyW" },
+    { normal: "у", shift: "У"  , dataset: "KeyE"},
+    { normal: "к", shift: "К"  , dataset: "KeyR"},
+    { normal: "е", shift: "Е"  , dataset: "KeyT"},
+    { normal: "н", shift: "Н"  , dataset: "KeyY"},
+    { normal: "г", shift: "Г" , dataset: "KeyU" },
+    { normal: "ш", shift: "Ш"  , dataset: "KeyI"},
+    { normal: "щ", shift: "Щ"  , dataset: "KeyO"},
+    { normal: "з", shift: "З"  , dataset: "KeyP"},
+    { normal: "х", shift: "Х"  , dataset: "BracketLeft"},
+    { normal: "ъ", shift: "Ъ"  , dataset: "BracketRight"},
+    { normal: "\\", shift: "/", class: "backslash", dataset: "Backslash" }],
+    [{ normal: "caps", class: "capslock",  dataset: "CapsLock" },
+    { normal: "ф", shift: "Ф", dataset: "KeyA" },
+    { normal: "ы", shift: "Ы", dataset: "KeyS" },
+    { normal: "в", shift: "В", dataset:  "KeyD"},
+    { normal: "а", shift: "А", dataset:  "KeyF"},
+    { normal: "п", shift: "П", dataset:  "KeyG"},
+    { normal: "р", shift: "Р" , dataset: "KeyH"},
+    { normal: "о", shift: "О", dataset: "KeyJ" },
+    { normal: "л", shift: "Л", dataset:  "KeyK"},
+    { normal: "д", shift: "Д" , dataset: "KeyL"},
+    { normal: "ж", shift: "Ж" , dataset: "Semicolon"},
+    { normal: "э", shift: "Э" , dataset: "Quote"},
+    { normal: "enter", class: "enter",  dataset: "Enter" }],
+    [{ normal: "shift", class: "shift", dataset: "ShiftLeft" },
+    { normal: "я", shift: "Я", dataset: "KeyZ" },
+    { normal: "ч", shift: "Ч", dataset: "KeyX" },
+    { normal: "с", shift: "С", dataset:  "KeyC"},
+    { normal: "м", shift: "М", dataset:  "KeyV"},
+    { normal: "и", shift: "И", dataset:  "KeyB"},
+    { normal: "т", shift: "Т", dataset:  "KeyN"},
+    { normal: "ь", shift: "Ь", dataset: "KeyM" },
+    { normal: "б", shift: "Б", dataset: "Comma" },
+    { normal: "ю", shift: "Ю", dataset: "Period" },
+    { normal: ".", shift: ",", dataset: "Slash" },
+    { normal: "↑", class: "up", dataset: "ArrowUp" },
+    { normal: "shift", class: "shift", dataset: "ShiftRight" }],
+    [{ normal: "control", class: "control", dataset: "ControlLeft" },
+    { normal: "ё", shift: "Ё", dataset: "Backquote" },
+    { normal: "alt", class: "alt" , dataset: "AltLeft"},
+    { normal: "space", class: "space", dataset: "Space" },
+    { normal: "alt", class: "alt", dataset: "AltRight" },
+    { normal: "control", class: "control", dataset: "ControlRight" },
+    { normal: "←", class: "left", dataset: "ArrowLeft" },
+    { normal: "↓", class: "down" , dataset: "ArrowDown"},
+    { normal: "→", class: "right", dataset: "ArrowRight" },
+    { normal: "del", class: "delete", dataset: "Delete" }],
   ]
 }
 
 const en = {
   lang: "en",
   keys: [
-    [{ normal: "`", shift: "~", class: "esc" },
-    { normal: "1", shift: "!" },
-    { normal: "2", shift: "@" },
-    { normal: "3", shift: "#" },
-    { normal: "4", shift: "$" },
-    { normal: "5", shift: "%" },
-    { normal: "6", shift: "^" },
-    { normal: "7", shift: "&" },
-    { normal: "8", shift: "*" },
-    { normal: "9", shift: "(" },
-    { normal: "0", shift: ")" },
-    { normal: "-", shift: "_" },
-    { normal: "=", shift: "+" },
-    { normal: "⌫", shift: "⌫", class: "backspace" }],
-    [{ normal: "tab", class: "tab" },
-    { normal: "q", shift: "Q" },
-    { normal: "w", shift: "W" },
-    { normal: "e", shift: "E" },
-    { normal: "r", shift: "R" },
-    { normal: "t", shift: "T" },
-    { normal: "y", shift: "Y" },
-    { normal: "u", shift: "U" },
-    { normal: "i", shift: "I" },
-    { normal: "o", shift: "O" },
-    { normal: "p", shift: "P" },
-    { normal: "[", shift: "{" },
-    { normal: "[", shift: "}" },
-    { normal: "\\", shift: "|", class: "backslash" }],
-    [{ normal: "caps", class: "capslock" },
-    { normal: "a", shift: "A" },
-    { normal: "s", shift: "S" },
-    { normal: "d", shift: "D" },
-    { normal: "f", shift: "F" },
-    { normal: "g", shift: "G" },
-    { normal: "h", shift: "H" },
-    { normal: "j", shift: "J" },
-    { normal: "k", shift: "K" },
-    { normal: "l", shift: "L" },
-    { normal: ";", shift: ":" },
-    { normal: "'", shift: " " },
-    { normal: "enter", class: "enter" }],
-    [{ normal: "shift", class: "shift" },
-    { normal: "z", shift: "Z" },
-    { normal: "x", shift: "X" },
-    { normal: "c", shift: "C" },
-    { normal: "v", shift: "V" },
-    { normal: "b", shift: "B" },
-    { normal: "n", shift: "N" },
-    { normal: "m", shift: "M" },
-    { normal: ",", shift: "<" },
-    { normal: ".", shift: ">" },
-    { normal: "/", shift: "?" },
-    { normal: "↑", class: "up" },
-    { normal: "shift", class: "shift" }
+    [{ normal: "`", shift: "~", class: "esc", dataset: "Backquote" },
+    { normal: "1", shift: "!", dataset: "Digit1" },
+    { normal: "2", shift: "@", dataset: "Digit2" },
+    { normal: "3", shift: "#", dataset: "Digit3" },
+    { normal: "4", shift: "$", dataset: "Digit4" },
+    { normal: "5", shift: "%", dataset: "Digit5" },
+    { normal: "6", shift: "^", dataset: "Digit6" },
+    { normal: "7", shift: "&", dataset: "Digit7" },
+    { normal: "8", shift: "*", dataset: "Digit8" },
+    { normal: "9", shift: "(", dataset: "Digit9" },
+    { normal: "0", shift: ")", dataset: "Digit0" },
+    { normal: "-", shift: "_", dataset: "Minus" },
+    { normal: "=", shift: "+" , dataset: "Equal"},
+    { normal: "bs", shift: "bs", class: "backspace", dataset: "Backspace" }],
+    [{ normal: "tab", class: "tab", dataset: "Tab" },
+    { normal: "q", shift: "Q", dataset: "KeyQ" },
+    { normal: "w", shift: "W", dataset: "KeyW" },
+    { normal: "e", shift: "E" , dataset: "KeyE"},
+    { normal: "r", shift: "R" , dataset: "KeyR"},
+    { normal: "t", shift: "T" , dataset: "KeyT"},
+    { normal: "y", shift: "Y" , dataset: "KeyY"},
+    { normal: "u", shift: "U", dataset: "KeyU" },
+    { normal: "i", shift: "I" , dataset: "KeyI"},
+    { normal: "o", shift: "O" , dataset: "KeyO"},
+    { normal: "p", shift: "P" , dataset: "KeyP"},
+    { normal: "[", shift: "{" , dataset: "BracketLeft"},
+    { normal: "[", shift: "}" , dataset: "BracketRight"},
+    { normal: "\\", shift: "|", class: "backslash" , dataset: "Backslash"}],
+    [{ normal: "caps", class: "capslock", dataset: "CapsLock" },
+    { normal: "a", shift: "A", dataset: "KeyA" },
+    { normal: "s", shift: "S", dataset: "KeyS" },
+    { normal: "d", shift: "D", dataset:  "KeyD"},
+    { normal: "f", shift: "F", dataset:  "KeyF"},
+    { normal: "g", shift: "G", dataset:  "KeyG"},
+    { normal: "h", shift: "H" , dataset: "KeyH"},
+    { normal: "j", shift: "J", dataset: "KeyJ" },
+    { normal: "k", shift: "K", dataset:  "KeyK"},
+    { normal: "l", shift: "L" , dataset: "KeyL"},
+    { normal: ";", shift: ":" , dataset: "Semicolon"},
+    { normal: "'", shift: "&#34",dataset: "Quote"},
+    { normal: "enter", class: "enter", dataset: "Enter" }],
+    [{ normal: "shift", class: "shift", dataset: "ShiftLeft" },
+    { normal: "z", shift: "Z", dataset: "KeyZ" },
+    { normal: "x", shift: "X", dataset: "KeyX" },
+    { normal: "c", shift: "C", dataset:  "KeyC"},
+    { normal: "v", shift: "V", dataset:  "KeyV"},
+    { normal: "b", shift: "B", dataset:  "KeyB"},
+    { normal: "n", shift: "N", dataset:  "KeyN"},
+    { normal: "m", shift: "M", dataset: "KeyM" },
+    { normal: ",", shift: "<", dataset: "Comma" },
+    { normal: ".", shift: ">", dataset: "Period" },
+    { normal: "/", shift: "?", dataset: "Slash" },
+    { normal: "↑", class: "up", dataset: "ArrowUp" },
+    { normal: "shift", class: "shift", dataset: "ShiftRight" }
     ],
-    [{ normal: "control", class: "control" },
-    { normal: "ё", shift: "Ё" },
-    { normal: "alt", class: "alt" },
-    { normal: "space", class: "space" },
-    { normal: "alt", class: "alt" },
-    { normal: "lang", class: "lang" },
-    { normal: "←", class: "left" },
-    { normal: "↓", class: "down" },
-    { normal: "→", class: "right" },
-    { normal: "del", class: "delete" }],
+    [{ normal: "control", class: "control", dataset: "ControlLeft" },
+    { normal: "ё", shift: "Ё", dataset: "Backquote" },
+    { normal: "alt", class: "alt" , dataset: "AltLeft"},
+    { normal: "space", class: "space", dataset: "Space" },
+    { normal: "alt", class: "alt", dataset: "AltRight" },
+    { normal: "control", class: "control", dataset: "ControlRight" },
+    { normal: "←", class: "left", dataset: "ArrowLeft" },
+    { normal: "↓", class: "down" , dataset: "ArrowDown"},
+    { normal: "→", class: "right", dataset: "ArrowRight" },
+    { normal: "del", class: "delete", dataset: "Delete" }],
   ]
 }
 
@@ -174,15 +172,14 @@ const specialKeys = {
   shift: (event) => {
     //console.log(event);
     activeKeys.forEach(item => {
-      const element = document.querySelector(`[data-key~="${item.key}"]`);
-      //console.log("item.key", item.key)
+      const element = document.querySelector(`[data-key~="${event.key}"]`);
       element && element.classList.add("active");
     });
     activeKeys = [];
     if (modeKey !== 'shift') {
       modeKey = 'shift';
+      renderKeyboard();
     }
-    renderKeyboard();
   },
   capslock: (event) => {
     capsStatus = !capsStatus;
@@ -272,6 +269,7 @@ function renderKeyboard() {
     const rowString = row.map(key => {
       let value = key;
       const classes = ['key'];
+      const data = [];
       if (typeof key === 'object') {
         const isUpperCase = (!capsStatus && modeKey === "shift") || (capsStatus && modeKey !== "shift")
         value = key[modeKey] || key.normal;
@@ -280,8 +278,9 @@ function renderKeyboard() {
         }
         //console.log(value);
         key.class && classes.push(key.class);
+        key.dataset && data.push(key.dataset);
       }
-      return `<div class="${classes.join(' ')}" data-key="${value}">
+      return `<div class="${classes.join(' ')}" data-key="${value}" data-ultrakey="${data.join(' ')}">
       <span>${value}</span>
       </div>`
     }).join('');
@@ -292,41 +291,45 @@ function renderKeyboard() {
   keyboard.innerHTML = hrmlString;
 }
 
-function isSpecial(key) {
-  return key.length !== 1;
+function isSpecial(addElem) {
+  return addElem.length !== 1;
 }
 
-function handleKeyDown(event) {
+function handleKeyDown(event, mouse = false) {
   const key = event.key.toLowerCase();
-  console.log(key);
+  //console.log("key", key);
+  //console.log(event.code);
   if (specialKeys[key]) {
     specialKeys[key](event);
-  }
-  if (event.key.toLowerCase() === "capslock") {
+   }
+   if (event.key.toLowerCase() === "capslock") {
     return;
   }
+
+  const textarea = document.querySelector(".keyboard__showcase");
+  textarea.focus();
+  const altElement = document.querySelector(`[data-ultrakey~="${event.code}"]`);
+  //console.log("altelement", altElement);
+  altElement && altElement.classList.add("active");
+  const addElem = altElement.querySelector("span").innerHTML;
   const isUpperCase = (!capsStatus && modeKey === "shift") || (capsStatus && modeKey !== "shift");
-  let SuperTestKey8 = key;
-  if (!isSpecial(SuperTestKey8)) {
+  let fillBtn = addElem;
+  //activeKeys.push(fillBtn);
+  //console.log(activeKeys);
+  if (!isSpecial(fillBtn)) {
+    event.preventDefault();
     SuperTestKey8 = isUpperCase ? event.key.toUpperCase() : event.key.toLowerCase();
+    //activeKeys.push(SuperTestKey8);
+    let indexTextArea = textarea.selectionStart;
+    textarea.value = textarea.value.slice(0, indexTextArea) + addElem + textarea.value.slice(indexTextArea,)
+    textarea.selectionStart = indexTextArea + 1;
+    textarea.selectionEnd = indexTextArea + 1;
   }
-  activeKeys.push(SuperTestKey8);
-  //const keys = document.querySelectorAll(".key");
-  //console.log('activeKeys', activeKeys)
-  activeKeys.forEach(activeKey => {
-    if (activeKey === " ") {
-      activeKey = "space";
-    }
-    if (activeKey === "backspace") {
-      activeKey = "⌫";
-    }
-    console.log("activeKey=`", activeKey,"`")
-    const element = document.querySelector(`[data-key~="${activeKey}"]`);
-    console.log('element', element)
-    element && element.classList.add("active");
-  }
-  )
+  //console.log("altelement", altElement);
+  altElement && altElement.classList.add("active");
+
 }
+
 
 function handleKeyUp(event) {
   if (event.key.toLowerCase() === 'shift') {
@@ -344,20 +347,14 @@ function handleKeyUp(event) {
   }
   const textarea = document.querySelector(".keyboard__showcase");
   textarea.focus();
-  //console.log("event=`|", event.key.toLowerCase(), "|`")
   if (event.key.toLowerCase() !== "capslock") {
     let elemKey = isSpecial(event.key) ? event.key.toLowerCase() : event.key;
     activeKeys = activeKeys.filter(key => key !== elemKey)
-    if (elemKey === " ") {
-      elemKey = "space"
-    }
-    if (elemKey === "backspace") {
-      elemKey = "⌫";
-    }
-    const element = document.querySelector(`[data-key~="${elemKey}"]`);
+    const element = document.querySelector(`[data-ultrakey~="${event.code}"]`);
     element && element.classList.remove("active");
+    
   }
-  //console.log("event=`|", elemKey, "|`")
+  // //console.log("event=`|", elemKey, "|`")
 }
 
 function mouseClickDown(event) {
@@ -367,17 +364,17 @@ function mouseClickDown(event) {
   key.classList.add("active");
   const textarea = document.querySelector(".keyboard__showcase");
   let valueKey = key.dataset.key;
-  console.log(valueKey);
+  //console.log(valueKey);
   if (specialKeys[valueKey]) {
     specialKeys[valueKey](event);
     const element = document.querySelector(`[data-key~="${valueKey}"]`);
     element && element.classList.add("active");
   }
   if (valueKey === "caps") {
-    valueKey = "capslock";
-    specialKeys[valueKey](event);
+      valueKey = "capslock";
+      specialKeys[valueKey](event);
   }
-  if (valueKey === "⌫") {
+  if (valueKey === "bs") {
     valueKey = "backspace";
     specialKeys[valueKey](event);
   }
@@ -385,7 +382,7 @@ function mouseClickDown(event) {
     valueKey = "delete";
     specialKeys[valueKey](event);
   }
-  if (!isSpecial(valueKey) && valueKey !== "⌫") {
+  if (!isSpecial(valueKey)) {
     let indexTextArea = textarea.selectionStart;
     textarea.value = textarea.value.slice(0, indexTextArea) + valueKey + textarea.value.slice(indexTextArea,)
     textarea.selectionStart = indexTextArea + 1;
@@ -404,7 +401,7 @@ function mouseClickUp(event) {
   }
   if (!key) return;
   key.classList.remove("active");
-  console.log(key);
+  //console.log(key);
   const textarea = document.querySelector(".keyboard__showcase");
   textarea.focus();
 }
