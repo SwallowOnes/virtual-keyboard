@@ -350,9 +350,9 @@ function handleKeyUp(event) {
 function mouseClickDown(event) {
   const key = event.target.closest('.key');
   // console.log('key', key);
-  const addElem = key.dataset.ultrakey;
   // console.log('ultradata', addElem);
   if (!key) return;
+  const addElem = key.dataset.ultrakey;
   key.classList.add('active');
   const textarea = document.querySelector('.keyboard__showcase');
   let valueKey = key.dataset.key;
