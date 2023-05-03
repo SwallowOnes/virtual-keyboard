@@ -9,8 +9,7 @@ let lang = localStorage.getItem("kbLanguage") || "ru";
 document.addEventListener("DOMContentLoaded", () => {
   const keyboardHTML = `
   <div class="keyboard">
-    <textarea class="keyboard__showcase">
-    </textarea>
+    <textarea class="keyboard__showcase"></textarea>
     <div class="keyboard__keys">
     </div>
     <p> Клавиатура созданна в операционной системе Windows</p>
